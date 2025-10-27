@@ -1,0 +1,18 @@
+@use '../variables' as vars;
+
+.quote-rotator {
+  margin: 32px auto 0;
+  text-align: center;
+  color: vars.$color-text-primary;
+
+  &__text {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  &__author {
+    font-size: 0.95rem;
+    color: vars.$color-text-muted;
+  }
+}
