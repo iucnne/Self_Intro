@@ -65,6 +65,10 @@
   justify-content: center;
   padding: 32px;
   z-index: 40;
+
+  &.intro-modal--exiting {
+    pointer-events: none;
+  }
 }
 
 .intro-modal__backdrop {
@@ -72,6 +76,8 @@
   inset: 0;
   background: rgba(5, 7, 12, 0.76);
   backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.26s ease;
 }
 
 .intro-modal__panel {
@@ -85,6 +91,9 @@
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
   display: grid;
   gap: 24px;
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .intro-modal__close {
@@ -170,4 +179,20 @@
     top: 12px;
     right: 12px;
   }
+}
+
+.intro-modal--entering .intro-modal__backdrop,
+.intro-modal--entered .intro-modal__backdrop {
+  opacity: 1;
+}
+
+.intro-modal--entering .intro-modal__panel,
+.intro-modal--entered .intro-modal__panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.intro-modal--exiting .intro-modal__panel {
+  transform: translateY(20px) scale(0.97);
+  opacity: 0;
 }

@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import { PROJECTS } from '../data/projects.js'
+import ProjectDetailModal from '../components/ProjectDetailModal.jsx'
 
 function ProjectPage() {
+  const [activeProject, setActiveProject] = useState(null)
+
+  const handleOpenProject = (project) => {
+    if (project.detail) {
+      setActiveProject(project)
+    }
+  }
+
+  const handleCloseProject = () => {
+    setActiveProject(null)
+  }
+
   return (
     <section className="page-stack__project" id="project">
       <div className="project-stack">
@@ -28,11 +42,30 @@ function ProjectPage() {
             </div>
 
             <div className={`project-banner__preview project-banner__preview--${project.previewClass}`}>
-              <button type="button">View project</button>
+              {project.url ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-banner__link"
+                >
+                  View project
+                </a>
+              ) : project.detail ? (
+                <button type="button" className="project-banner__link" onClick={() => handleOpenProject(project)}>
+                  View project
+                </button>
+              ) : (
+                <button type="button" disabled>
+                  View project
+                </button>
+              )}
             </div>
           </article>
         ))}
       </div>
+
+      <ProjectDetailModal project={activeProject} onClose={handleCloseProject} />
     </section>
   )
 }

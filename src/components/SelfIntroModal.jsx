@@ -1,8 +1,11 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { SELF_INTRO_PARAGRAPHS } from '../data/selfIntro.js'
+import { useModalTransition } from '../hooks/useModalTransition.js'
 
 function SelfIntroModal({ isOpen, onClose }) {
+  const { isMounted, status } = useModalTransition(isOpen, { duration: 260 })
+
   useEffect(() => {
     if (!isOpen) {
       return undefined
@@ -24,12 +27,12 @@ function SelfIntroModal({ isOpen, onClose }) {
     }
   }, [isOpen, onClose])
 
-  if (!isOpen) {
+  if (!isMounted) {
     return null
   }
 
   return (
-    <div className="intro-modal" aria-live="assertive">
+    <div className={`intro-modal intro-modal--${status}`} aria-live="assertive">
       <div className="intro-modal__backdrop" role="presentation" onClick={onClose} />
 
       <section className="intro-modal__panel" role="dialog" aria-modal="true" aria-label="Self introduction">

@@ -1,13 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-/**
- * 控制背景音樂播放的共用 hook。
- *
- * @param {Object} config
- * @param {string} config.src - 音訊來源路徑。
- * @param {boolean} [config.loop=true] - 是否循環播放。
- * @param {'auto' | 'metadata' | 'none'} [config.preload='auto'] - audio preload 行為。
- */
 export function useBackgroundAudio({ src, loop = true, preload = 'auto' } = {}) {
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -41,11 +33,7 @@ export function useBackgroundAudio({ src, loop = true, preload = 'auto' } = {}) 
     await play()
   }, [isPlaying, pause, play])
 
-  useEffect(() => {
-    return () => {
-      pause()
-    }
-  }, [pause])
+  useEffect(() => pause, [pause])
 
   const audioProps = useMemo(
     () => ({
@@ -57,11 +45,5 @@ export function useBackgroundAudio({ src, loop = true, preload = 'auto' } = {}) 
     [src, loop, preload],
   )
 
-  return {
-    audioProps,
-    isPlaying,
-    play,
-    pause,
-    toggle,
-  }
+  return { audioProps, isPlaying, play, pause, toggle }
 }

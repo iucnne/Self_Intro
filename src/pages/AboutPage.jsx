@@ -1,10 +1,22 @@
+import { useMemo, useState } from 'react'
 import { useCareerTrain } from '../hooks/useCareerTrain.js'
 import { CAREER_STAGES, STAGE_DETAILS, LIFE_TILES } from '../data/about.js'
+import LifeTileModal from '../components/LifeTileModal.jsx'
 
 function AboutPage() {
   const { stages, currentIndex, selectByIndex, currentStage } = useCareerTrain(CAREER_STAGES)
   const detailKey = currentStage?.key ?? 'intern'
   const careerDetail = STAGE_DETAILS[detailKey]
+  const [activeTileKey, setActiveTileKey] = useState(null)
+  const activeTile = useMemo(() => LIFE_TILES.find((tile) => tile.key === activeTileKey) ?? null, [activeTileKey])
+
+  const handleTileOpen = (key) => {
+    setActiveTileKey(key)
+  }
+
+  const handleTileClose = () => {
+    setActiveTileKey(null)
+  }
 
   return (
     <div className="page page--about">
@@ -39,13 +51,22 @@ function AboutPage() {
 
       <div className="about-gallery">
         {LIFE_TILES.map((tile) => (
-          <article key={tile.key} className={`about-card about-card--${tile.key}`}>
+          <button
+            key={tile.key}
+            type="button"
+            className={`about-card about-card--${tile.key}`}
+            onClick={() => handleTileOpen(tile.key)}
+            aria-haspopup="dialog"
+            aria-expanded={activeTileKey === tile.key}
+          >
             <p className="about-card__subtitle">{tile.subtitle}</p>
             <h2>{tile.title}</h2>
             <p>{tile.body}</p>
-          </article>
+          </button>
         ))}
       </div>
+
+      <LifeTileModal tile={activeTile} onClose={handleTileClose} />
     </div>
   )
 }

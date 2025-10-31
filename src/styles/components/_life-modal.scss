@@ -1,0 +1,148 @@
+.life-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 45;
+
+  &.life-modal--exiting {
+    pointer-events: none;
+  }
+}
+
+.life-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 11, 18, 0.78);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.life-modal__panel {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  border-radius: 28px;
+  background: rgba(14, 18, 28, 0.94);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+  padding: 36px 40px;
+  display: grid;
+  gap: 24px;
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+
+.life-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.7);
+  color: #f8fafc;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.life-modal__close:hover,
+.life-modal__close:focus-visible {
+  background: rgba(59, 130, 246, 0.4);
+  transform: scale(1.05);
+  outline: none;
+}
+
+.life-modal__header {
+  display: grid;
+  gap: 8px;
+}
+
+.life-modal__eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.life-modal__header h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  color: #f4f6fb;
+}
+
+.life-modal__intro {
+  display: grid;
+  gap: 16px;
+  color: rgba(241, 245, 249, 0.88);
+  line-height: 1.7;
+}
+
+.life-modal__intro p {
+  margin: 0;
+}
+
+.life-modal__highlights {
+  display: grid;
+  gap: 16px;
+}
+
+.life-modal__highlights section {
+  border-radius: 20px;
+  padding: 18px 20px;
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  display: grid;
+  gap: 10px;
+}
+
+.life-modal__highlights h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #f8fafc;
+}
+
+.life-modal__highlights ul {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(226, 232, 240, 0.85);
+  display: grid;
+  gap: 8px;
+}
+
+.life-modal--entering .life-modal__backdrop,
+.life-modal--entered .life-modal__backdrop {
+  opacity: 1;
+}
+
+.life-modal--entering .life-modal__panel,
+.life-modal--entered .life-modal__panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.life-modal--exiting .life-modal__panel {
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+}
+
+@media (max-width: 640px) {
+  .life-modal {
+    padding: 16px;
+  }
+
+  .life-modal__panel {
+    padding: 28px 24px;
+    border-radius: 22px;
+  }
+}

@@ -1,12 +1,6 @@
 import PropTypes from 'prop-types'
 import { useBackgroundAudio } from '../hooks/useBackgroundAudio.js'
 
-/**
- * 背景音樂的音訊元素與控制按鈕。
- *
- * @param {Object} props
- * @param {string} props.src - 音訊來源路徑。
- */
 function BackgroundAudioControl({ src }) {
   const { audioProps, isPlaying, toggle } = useBackgroundAudio({ src })
 
