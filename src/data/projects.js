@@ -26,7 +26,7 @@ export const PROJECTS = [
     role: 'Research Developer',
     tools: 'JavaScript · HTML · CSS · Python · Flask API · FaceNet',
     description:
-      'Makeup Attack System (MAS) 是我們以 Flask 與 PyTorch 打造的人臉辨識攻防平台，聚焦化妝偽裝與門禁繞過情境。',
+      'Makeup Attack System (MAS) 是我們以 Flask 與 PyTorch 打造的人臉辨識攻防平台，聚焦化妝偽裝繞過情境。',
     tags: ['Makeup Attack System', 'GA 對抗樣本', 'FaceNet / MediaPipe'],
     previewClass: 'facenet',
     tone: 'linear-gradient(135deg, #312e81, #0f172a)',
