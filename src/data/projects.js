@@ -8,7 +8,7 @@ export const PROJECTS = [
     tags: ['Sticky Navbar', '互動式自傳', 'IntersectionObserver'],
     previewClass: 'portfolio',
     tone: 'linear-gradient(135deg, #111827, #312e81)',
-    url: 'https://github.com/iucnne/Self_Intro/tree/main/yao-page',
+    url: 'https://github.com/iucnne/Self_Intro',
   },
   {
     title: 'Life Kit',
