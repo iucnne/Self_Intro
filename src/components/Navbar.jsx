@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHoverLift } from '../hooks/useHoverLift.js'
 
@@ -15,6 +15,8 @@ import { useHoverLift } from '../hooks/useHoverLift.js'
 function Navbar({ brandLabel, navItems, ctaLabel, activeKey, onSelect }) {
   const { handleEnter, handleLeave } = useHoverLift()
   const [isCtaHover, setIsCtaHover] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuId = useId()
 
   const handleCtaEnter = (event) => {
     handleEnter(event)
@@ -26,45 +28,69 @@ function Navbar({ brandLabel, navItems, ctaLabel, activeKey, onSelect }) {
     setIsCtaHover(false)
   }
 
+  const handleToggleMenu = () => {
+    setIsMenuOpen((prev) => !prev)
+  }
+
+  const handleNavClick = (key) => {
+    onSelect?.(key)
+    setIsMenuOpen(false)
+  }
+
+  const navClasses = `nav-pill ${isMenuOpen ? 'is-open' : ''}`
+
   return (
     <header className="nav-container">
-      <nav className="nav-pill">
-        <span className="nav-brand" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-          {brandLabel}
-        </span>
+      <nav className={navClasses}>
+        <div className="nav-pill__brand-row">
+          <span className="nav-brand" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+            {brandLabel}
+          </span>
 
-        {/* 透過資料陣列渲染導覽項目，方便日後新增或調整順序 */}
-        <ul className="nav-list">
-          {navItems.map(({ key, label }) => {
-            const isActive = key === activeKey
-            return (
-              <li
-                key={key}
-                className={isActive ? 'is-active' : ''}
-                onMouseEnter={handleEnter}
-                onMouseLeave={handleLeave}
-              >
-                <button
-                  type="button"
-                  onClick={() => onSelect?.(key)}
-                  aria-current={isActive ? 'page' : undefined}
+          <button
+            type="button"
+            className="nav-toggle"
+            onClick={handleToggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-controls={menuId}
+            aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+
+        <div className="nav-pill__menu" id={menuId}>
+          {/* 透過資料陣列渲染導覽項目，方便日後新增或調整順序 */}
+          <ul className="nav-list">
+            {navItems.map(({ key, label }) => {
+              const isActive = key === activeKey
+              return (
+                <li
+                  key={key}
+                  className={isActive ? 'is-active' : ''}
+                  onMouseEnter={handleEnter}
+                  onMouseLeave={handleLeave}
                 >
-                  {label}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
+                  <button type="button" onClick={() => handleNavClick(key)} aria-current={isActive ? 'page' : undefined}>
+                    {label}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
 
-        <button
-          type="button"
-          className={`cta-button ${isCtaHover ? 'is-hovering' : ''}`}
-          onMouseEnter={handleCtaEnter}
-          onMouseLeave={handleCtaLeave}
-        >
-          <span className="cta-button__label">{ctaLabel}</span>
-          <span className="cta-button__email">longsing3510@gmail.com</span>
-        </button>
+          <button
+            type="button"
+            className={`cta-button ${isCtaHover ? 'is-hovering' : ''}`}
+            onMouseEnter={handleCtaEnter}
+            onMouseLeave={handleCtaLeave}
+          >
+            <span className="cta-button__label">{ctaLabel}</span>
+            <span className="cta-button__email">longsing3510@gmail.com</span>
+          </button>
+        </div>
       </nav>
     </header>
   )

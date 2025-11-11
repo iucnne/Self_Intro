@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+/**
+ * 控制背景音樂播放的通用 Hook，負責 DOM audio 元素的建立、播放狀態同步與錯誤處理。
+ */
 export function useBackgroundAudio({ src, loop = true, preload = 'auto' } = {}) {
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -33,6 +36,7 @@ export function useBackgroundAudio({ src, loop = true, preload = 'auto' } = {}) 
     await play()
   }, [isPlaying, pause, play])
 
+  // 元件卸載時確保音樂停止，避免音訊在背景持續播放。
   useEffect(() => pause, [pause])
 
   const audioProps = useMemo(

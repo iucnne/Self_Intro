@@ -107,33 +107,39 @@
   padding: 32px;
   box-shadow: 0 20px 40px rgba(5, 7, 12, 0.45);
   color: rgba(244, 246, 251, 0.9);
-  display: grid;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
   border: none;
   background: none;
-  text-align: left;
   cursor: pointer;
   transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
   position: relative;
   font: inherit;
 }
 
-.about-card__subtitle {
+.about-card__key {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(244, 246, 251, 0.55);
+}
+
+.about-card__title {
+  margin: 0 auto;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+}
+
+.about-card__description {
   margin: 0;
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(244, 246, 251, 0.6);
-}
-
-.about-card h2 {
-  margin: 0;
-  font-size: 1.4rem;
-}
-
-.about-card p {
-  margin: 0;
-  line-height: 1.6;
+  color: rgba(244, 246, 251, 0.7);
 }
 
 .about-card:hover,
@@ -391,12 +397,8 @@
     padding: 40px 28px;
   }
 
-  .about-card--hero {
-    grid-column: span 1;
-  }
-
   .about-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
   }
 
   .home-hero {
@@ -423,13 +425,28 @@
   }
 
   .career-path {
-    flex-direction: column;
-    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 8px;
   }
 
-  .career-path__controls {
+  .career-path__rail {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .career-path__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .career-step {
+    min-width: clamp(180px, 60vw, 240px);
+    scroll-snap-align: start;
   }
 }
 
@@ -443,11 +460,40 @@
   }
 
   .about-gallery {
-    grid-template-columns: 1fr;
+    width: min(420px, 90vw);
+    max-width: 100%;
+    margin: 0 auto;
+    justify-self: center;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 12px;
   }
 
   .page__split {
     grid-template-columns: 1fr;
+  }
+
+  .about-card {
+    padding: 16px;
+    border-radius: 20px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .about-card__key {
+    font-size: 0.7rem;
+  }
+
+  .about-card__title {
+    font-size: 1.1rem;
+  }
+
+  .about-card__description {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
   }
 
   .home-hero__intro {

@@ -1,13 +1,14 @@
 # Yao Portfolio
 
-沉浸式單頁網站，展示我的前端開發歷程、重點專案與互動式自傳。以 React + Vite 驅動，搭配客製 SCSS、GSAP 動畫與 Intersection Observer，提供滑順的滾動導覽與多層次視覺效果。
+沉浸式單頁網站，展示我的前端開發歷程、重點專案與互動式自傳。以 React + Vite 驅動，搭配客製 SCSS、GSAP 動畫與 Intersection Observer（透過自訂 hook 封裝），提供滑順的滾動導覽與多層次視覺效果。
 
 ## ✨ 特色
 
-- **Sticky Capsule Navbar**：跟隨滾動的導覽列，可即時對應 Home / About / Project 區塊。
+- **Sticky Capsule Navbar**：跟隨滾動的導覽列，由 `useSectionObserver` 提供即時的區塊同步與平滑捲動。
 - **Hero + Quote Rotator**：首頁結合個人介紹、狀態標籤與輪播語錄，建立品牌語氣。
 - **背景音樂與自傳 Modal**：右下角的音樂唱片控制與文件圖示按鈕，可即時播放/停止 BGM，或開啟自傳內容。
-- **Projects Banner Stack**：採用 sticky card 形式呈現五個代表作品，包含技術堆疊、角色與成果。
+- **四象限 About 卡片**：精簡成 Lifestyle / Sport / Music / Travel 四格，於小螢幕自動置中成 2x2 排列。
+- **Projects Banner Stack**：採用 sticky card 形式呈現代表作品，包含技術堆疊、角色與成果。
 - **模組化資料**：專案、引言等內容集中在資料檔，可快速更新或新增。
 
 ## 🛠 技術堆疊
@@ -44,14 +45,14 @@ yao-page/
 ├── src/
 │   ├── App.jsx                # 主結構、滾動監聽與區塊組裝
 │   ├── components/            # Navbar、QuoteRotator、SelfIntroModal、BackgroundAudioControl
-│   ├── hooks/                 # 自訂 hook（如 useHoverLift、useCareerTrain）
+│   ├── hooks/                 # 自訂 hook（useSectionObserver、useHoverLift、useModal 等）
 │   ├── pages/                 # Home / About / Project 三個主要頁面
-│   ├── data/quotes.js         # 輪播語錄資料
+│   ├── data/                  # quotes / sections / projects / about 等資料
 │   └── styles/                # SCSS (base, components, variables)
 └── package.json
 ```
 
-- **內容調整**：`src/pages/ProjectPage.jsx`、`src/data/quotes.js`、`src/pages/HomePage.jsx` 為主要更新入口。
+- **內容調整**：`src/pages/ProjectPage.jsx`、`src/data/quotes.js`、`src/pages/HomePage.jsx`、`src/data/projects.js` 為主要更新入口。
 - **樣式**：所有元件樣式集中在 `src/styles/components/`。
 
 ## 🧱 自訂與擴充建議

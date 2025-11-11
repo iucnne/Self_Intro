@@ -1,46 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import Navbar from './components/Navbar.jsx'
 import BackgroundAudioControl from './components/BackgroundAudioControl.jsx'
 import { SECTIONS } from './data/sections.js'
+import { useSectionObserver } from './hooks/useSectionObserver.js'
 import './styles/main.scss'
 
 function App() {
   const sections = useMemo(() => SECTIONS, [])
-  const [activeKey, setActiveKey] = useState(sections[0].key)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
-        if (visibleEntry) {
-          setActiveKey(visibleEntry.target.id)
-        }
-      },
-      {
-        rootMargin: '-45% 0px -45% 0px',
-        threshold: [0.2, 0.35, 0.6],
-      },
-    )
-
-    sections.forEach(({ key }) => {
-      const element = document.getElementById(key)
-      if (element) {
-        observer.observe(element)
-      }
-    })
-
-    return () => observer.disconnect()
-  }, [sections])
-
-  const handleSelect = (key) => {
-    const element = document.getElementById(key)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
+  // 透過自訂 hook 同步目前捲動區塊，並取得平滑捲動的控制函式。
+  const { activeKey, scrollToSection } = useSectionObserver(sections)
 
   return (
     <div className="app-shell">
@@ -51,7 +19,7 @@ function App() {
         navItems={sections.map(({ key, label }) => ({ key, label }))}
         ctaLabel="Let&apos;s Connect"
         activeKey={activeKey}
-        onSelect={handleSelect}
+        onSelect={scrollToSection}
       />
 
       <main className="page-stack" id="content">
