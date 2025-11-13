@@ -48,9 +48,9 @@
 .page-layer {
   width: 100%;
   padding: 60px 48px;
-  border-radius: 32px;
-  background: rgba(14, 17, 27, 0.82);
-  box-shadow: 0 24px 60px rgba(5, 7, 12, 0.45);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 
 .page {
@@ -91,15 +91,21 @@
 }
 
 .page--about {
+  width: 100%;
   display: grid;
   gap: 32px;
+  justify-items: center;
 }
 
 .about-gallery {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
   gap: 24px;
   align-items: stretch;
+  justify-content: center;
+  justify-items: center;
+  width: min(960px, 100%);
+  margin: 0 auto;
 }
 
 .about-card {
@@ -118,6 +124,8 @@
   transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
   position: relative;
   font: inherit;
+  width: 100%;
+  max-width: 220px;
 }
 
 .about-card__key {
@@ -171,11 +179,14 @@
 
 .page--project {
   padding: 0;
+  display: grid;
+  justify-items: center;
 }
 
 .project-stack {
   display: grid;
   gap: 0;
+  width: min(1100px, 100%);
 }
 
 .project-banner {
@@ -398,7 +409,8 @@
   }
 
   .about-gallery {
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    width: min(500px, 92vw);
   }
 
   .home-hero {
@@ -460,11 +472,10 @@
   }
 
   .about-gallery {
-    width: min(420px, 90vw);
+    width: min(360px, 86vw);
     max-width: 100%;
     margin: 0 auto;
-    justify-self: center;
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
     gap: 12px;
   }
 
@@ -522,24 +533,30 @@
   }
 
   .project-banner {
-    top: 100px;
-    padding: 32px 24px;
+    top: 90px;
+    padding: 24px 18px;
   }
 
   .project-stack > * + * {
-    margin-top: 100px;
+    margin-top: 90px;
   }
 
-  .career-path__controls {
-    justify-content: center;
+  .project-stack {
+    width: min(400px, 88vw);
+    justify-self: center;
   }
 
-  .career-path {
+  .project-banner__info p {
+    display: none;
+  }
+
+  .project-banner__meta {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
 
-  .career-step__line {
+  .project-banner__tags {
     display: none;
   }
 }
