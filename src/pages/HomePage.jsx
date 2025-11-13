@@ -6,6 +6,11 @@ import { FEATURED_TOOLS, HOME_INTRO } from '../data/home.js'
 
 function HomePage() {
   const { isOpen, open, close } = useModal()
+  const badgeItems = HOME_INTRO.badges.map((badge, index) => (
+    <span key={`${badge}-${index}`} className={badge.includes('●') ? 'home-hero__status' : undefined}>
+      {badge}
+    </span>
+  ))
 
   return (
     <div className="page page--home">
@@ -16,14 +21,11 @@ function HomePage() {
             <p>
               Hi, I&apos;m Yao，一個對世界充滿好奇的大男孩，正在把想像中的生活一步步拉進現實。
             </p>
-            <div className="home-hero__badges" aria-label="locations and availability">
-              {HOME_INTRO.badges.map((badge, index) => (
-                <span key={`${badge}-${index}`} className={badge.includes('●') ? 'home-hero__status' : undefined}>
-                  {badge}
-                </span>
-              ))}
-            </div>
           </div>
+        </div>
+
+        <div className="home-hero__badge-block" aria-label="locations and availability">
+          <div className="home-hero__badges">{badgeItems}</div>
         </div>
 
         <h1 className="home-hero__title">

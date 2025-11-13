@@ -1,5 +1,7 @@
 @use '../variables' as vars;
 
+/* 膠囊導航列：桌面維持完整導航，窄螢幕改為收合式漢堡選單。 */
+
 .nav-container {
   position: sticky;
   top: 24px;

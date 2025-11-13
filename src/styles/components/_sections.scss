@@ -1,13 +1,19 @@
 @use '../variables' as vars;
 
+/* 各內容區段的共用排版（Home/About/Project），含卡片、橫幅與 RWD 規則。 */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
 
+// ---------------------------
+// Global layout wrappers
+// ---------------------------
+
 .page-stack {
-  width: min(1180px, calc(100% - 48px));
+  width: min(1120px, 100%);
   display: flex;
   flex-direction: column;
-  gap: 160px;
-  margin: 0 auto 120px;
+  gap: 120px;
+  margin: 0 auto 96px;
+  padding: 0 clamp(16px, 5vw, 32px);
 }
 
 .page-stack__section {
@@ -15,15 +21,40 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
 }
 
+@media (min-width: 1024px) {
+  .page-stack {
+    gap: 160px;
+    margin-bottom: 120px;
+    padding-inline: 0;
+  }
+
+  .page-stack__section {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-stack {
+    padding-inline: 12px;
+    gap: 90px;
+    margin-bottom: 80px;
+  }
+
+  .page-stack__section {
+    gap: 28px;
+  }
+}
+
+// 共用分隔線與段落樣式
 .section-divider {
-  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   color: rgba(244, 246, 251, 0.65);
   font-size: 0.85rem;
   letter-spacing: 0.4em;
@@ -33,16 +64,16 @@
 .section-divider::before,
 .section-divider::after {
   content: '';
-  height: 1px;
   flex: 1;
+  height: 1px;
   background: rgba(244, 246, 251, 0.1);
 }
 
 .section-divider span {
   padding: 0 18px;
-  background: rgba(14, 17, 27, 0.78);
   border-radius: 999px;
   border: 1px solid rgba(99, 102, 241, 0.28);
+  background: rgba(14, 17, 27, 0.78);
 }
 
 .page-layer {
@@ -53,10 +84,11 @@
   box-shadow: none;
 }
 
+// 基礎段落內容格線
 .page {
-  width: 100%;
   display: grid;
   gap: 24px;
+  width: 100%;
 }
 
 .page__eyebrow {
@@ -90,6 +122,9 @@
   text-align: left;
 }
 
+// ---------------------------
+// About 四張生活卡片 RWD 排版
+// ---------------------------
 .page--about {
   width: 100%;
   display: grid;
@@ -97,15 +132,13 @@
   justify-items: center;
 }
 
+/* Desktop：四欄排列 */
 .about-gallery {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   align-items: stretch;
-  justify-content: center;
-  justify-items: center;
-  width: min(960px, 100%);
-  margin: 0 auto;
 }
 
 .about-card {
@@ -124,8 +157,15 @@
   transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
   position: relative;
   font: inherit;
-  width: 100%;
-  max-width: 220px;
+}
+
+/* Tablet: 2x2 排列 */
+@media (max-width: 1024px) {
+  .about-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: min(600px, 100%);
+  }
 }
 
 .about-card__key {
@@ -148,6 +188,30 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(244, 246, 251, 0.7);
+}
+
+/* Mobile: 置中並加入安全間距 */
+@media (max-width: 640px) {
+  .about-gallery {
+    width: min(360px, 92vw);
+    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 16px;
+    padding-inline: 4px;
+  }
+
+  .about-card {
+    padding: 24px 20px;
+  }
+
+  .about-card__title {
+    font-size: 1.2rem;
+  }
+
+  .about-card__description {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+  }
 }
 
 .about-card:hover,
@@ -177,6 +241,9 @@
   background: linear-gradient(135deg, #10b981, #047857);
 }
 
+// ---------------------------
+// Projects sticky 卡片堆疊效果
+// ---------------------------
 .page--project {
   padding: 0;
   display: grid;
@@ -185,10 +252,11 @@
 
 .project-stack {
   display: grid;
-  gap: 0;
+  gap: 40px;
   width: min(1100px, 100%);
 }
 
+/* Shared base styles：桌機 sticky + hover 動畫 */
 .project-banner {
   position: sticky;
   top: 120px;
@@ -344,20 +412,21 @@
   gap: 24px;
 }
 
+// Career path 選單（現階段保留在 About）
 .career-path {
-  margin-top: 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
+  margin-top: 32px;
 }
 
 .career-path__rail {
-  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 18px;
+  width: 100%;
   flex-wrap: nowrap;
   overflow-x: auto;
   padding: 12px 24px;
@@ -426,16 +495,6 @@
     font-size: clamp(2.6rem, 8vw, 4rem);
   }
 
-  .project-banner {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    top: 120px;
-  }
-
-  .project-stack > * + * {
-    margin-top: 120px;
-  }
-
   .career-path {
     justify-content: flex-start;
     padding: 0 8px;
@@ -477,6 +536,7 @@
     margin: 0 auto;
     grid-template-columns: repeat(2, minmax(140px, 1fr));
     gap: 12px;
+    justify-content: center;
   }
 
   .page__split {
@@ -507,17 +567,8 @@
     letter-spacing: 0.18em;
   }
 
-  .home-hero__intro {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .home-hero__avatar {
-    margin: 0 auto;
-  }
-
-  .home-hero__intro-text {
-    text-align: center;
+  .home-hero__intro-text p {
+    margin-top: 12px;
   }
 
   .home-overview {
@@ -528,22 +579,56 @@
     text-align: center;
   }
 
-  .home-hero__tools {
-    justify-content: center;
+  .home-hero__badge-block {
+    margin: 12px 0 24px;
+  }
+
+  .home-hero__badges {
+    gap: 10px;
   }
 
   .project-banner {
-    top: 90px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    top: 120px;
+  }
+
+}
+
+
+/* Tablet & mobile layout (≤1024px) — 僅調整尺寸與排版，動畫照舊 */
+@media (max-width: 1024px) {
+  .page--project {
+    justify-items: stretch;
+  }
+
+  .project-stack {
+    width: 100%;
+    gap: 40px;
+  }
+
+  .project-banner {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 24px;
+  }
+
+  .project-banner__preview {
+    min-height: 160px;
+  }
+}
+
+/* Mobile (≤640px) — 微調 padding 與資訊顯示 */
+@media (max-width: 640px) {
+  .project-banner {
     padding: 24px 18px;
   }
 
   .project-stack > * + * {
     margin-top: 90px;
-  }
-
-  .project-stack {
-    width: min(400px, 88vw);
-    justify-self: center;
   }
 
   .project-banner__info p {
@@ -560,7 +645,79 @@
     display: none;
   }
 }
+/* Tablet layout (>=768px) */
+@media (min-width: 768px) {
+  .home-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(200px, 0.8fr);
+    align-items: center;
+    gap: clamp(28px, 4vw, 48px);
+  }
 
+  .home-hero__intro {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+    text-align: left;
+  }
+
+  .home-hero__intro-text {
+    text-align: left;
+  }
+
+  .home-hero__avatar {
+    justify-self: end;
+    margin: 0;
+  }
+
+  .home-hero__badge-block,
+  .home-hero__title,
+  .home-hero__tools {
+    grid-column: 1 / 3;
+    justify-content: flex-start;
+  }
+
+  .home-hero__badge-block {
+    margin: 12px 0 20px;
+    justify-content: flex-start;
+  }
+
+  .home-hero__badges {
+    justify-content: flex-start;
+  }
+
+  .home-hero__title {
+    text-align: left;
+  }
+
+  .home-hero__tools {
+    justify-content: flex-start;
+  }
+}
+
+/* Desktop refinements (>=1024px) */
+@media (min-width: 1024px) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(36px, 5vw, 60px);
+  }
+
+  .home-hero__intro {
+    grid-template-columns: minmax(0, 1fr) 160px;
+    gap: 32px;
+  }
+
+  .home-hero__avatar {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+// ---------------------------
+// Home 首頁排版（Hero + Overview）
+// ---------------------------
 .page--home {
   position: relative;
   padding-bottom: 120px;
@@ -586,17 +743,21 @@
   letter-spacing: 0.04em;
 }
 
+// Mobile-first：單欄堆疊
 .home-hero {
-  display: grid;
-  gap: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 28px;
 }
 
 .home-hero__intro {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 18px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 16px;
 }
 
 .home-hero__avatar {
@@ -613,16 +774,26 @@
   gap: 10px;
   color: rgba(244, 246, 251, 0.85);
   line-height: 1.6;
+  text-align: center;
+}
+
+.home-hero__badge-block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 18px;
 }
 
 .home-hero__badges {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(244, 246, 251, 0.55);
+  align-items: center;
 }
 
 .home-hero__status {
@@ -660,7 +831,7 @@
   font-size: clamp(3.2rem, 6vw, 5.6rem);
   line-height: 1;
   margin: 12px 0 12px;
-  text-align: left;
+  text-align: center;
   display: grid;
   gap: 8px;
 }

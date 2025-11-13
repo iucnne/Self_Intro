@@ -1,3 +1,4 @@
+/* 匯入全域樣式與元件區塊，維持載入順序讓變數與基礎設定先於組件生效。 */
 @use './variables';
 @use './fonts';
 @use './base/base';
